@@ -1,43 +1,48 @@
 import React from 'react';
-import {AlertStatic as Alert, Button, Text, TextInput, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
+import MyInput from '../domain/MyInput';
+// import * as AsyncStorage from 'react-native/Libraries/Storage/AsyncStorage';
+import AsyncStorage from '@react-native-community/async-storage';
 
-function UselessTextInput(props) {
-    return (
-        <View
-            style={{marginTop: 300,
-                    marginLeft: 20,
-                    marginRight: 20, display: 'flex', alignContent:"center"}}>
-            <Text style={{fontWeight:"bold"}}>Student's name</Text>
-            <TextInput
-                style={{
-                    height: 40,
-                    borderColor: 'gray',
-                    borderWidth: 1,
-                    marginTop: 20,
-                    marginBottom: 20
-                    }}
-                {...props}
-                editable
-                maxLength={40}
-            />
-            <Button
-                style={{marginTop: 30}}
-                title="Let me in"
-                color="#30516E"
-                onPress={() => Alert.alert('Simple Button pressed')}
-            />
-        </View>
-    );
+export default class HomePage extends React.Component {
+    static navigationOptions = {
+        title: 'Welcome to the app!',
+    };
+
+    constructor(props) {
+        super(props);
+    }
+    _showMoreApp = () => {
+        this.props.navigation.navigate('MyList');
+    };
+
+    _signOutAsync = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+    };
+
+    render() {
+        return (
+            <>
+                <MyInput/>
+                <Button
+                    title="Switch page"
+                    onPress={() => this.props.navigation.navigate('MyList')}
+                />
+                <View style={styles.container}>
+                    <Button title="Show me more of the app" onPress={this._showMoreApp}/>
+                    <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
+                </View>
+            </>
+        );
+    }
 }
 
 
-export default function HomePage () {
-    const [value, onChangeText] = React.useState("Enter Student\'s Name");
-
-        return (<UselessTextInput
-            multiline
-            numberOfLines={1}
-            onChangeText={text => onChangeText(text)}
-            value={value}
-        />);
-};
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});

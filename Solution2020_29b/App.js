@@ -9,14 +9,23 @@
 import React from 'react';
 import HomePage from './src/pages/homePage';
 
+import {createStackNavigator} from 'react-navigation-stack';
+import MyList from './src/pages/myList';
+import SignInPage from './src/pages/signInPage';
+import AuthLoadingScreen from './src/pages/authLoadingScreen';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 
-  render() {
-    return (<HomePage/>);
-  }
-};
+const AppStack = createStackNavigator({ Home: HomePage,  MyList: MyList});
+const AuthStack = createStackNavigator({ SignIn: SignInPage });
 
+export default createAppContainer(createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+));
