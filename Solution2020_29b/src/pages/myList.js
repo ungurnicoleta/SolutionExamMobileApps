@@ -1,11 +1,13 @@
 import React from 'react';
-import {Button, StatusBar, View, StyleSheet, Text, SafeAreaView, ScrollView, FlatList} from 'react-native';
+import {Button, StatusBar, View, StyleSheet, Text, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-function Item({ name, title }) {
+const url = "http://192.168.43.120:2902";
+
+function Item({ name, status }) {
     return (
         <View style={styles.item}>
-            <Text style={styles.text}> {name}  {title}</Text>
+            <Text style={styles.text}> {name} --> {status}</Text>
         </View>
     );
 }
@@ -15,24 +17,22 @@ export default class MyList extends React.Component {
         super(props);
         this.state = {
             student: null,
-            DATA: [
-            {
-                id: '1',
-                title: 'First Item',
-                name: 'Yey'
-            },
-            {
-                id: '32',
-                title: 'Second Item',
-                name: 'Yey'
-            },
-            {
-                id: '3',
-                title: 'Third Item',
-                name: 'Yey'
-            }]
+            data : []
         };
     }
+
+   async showStudentData() {
+        const value = await AsyncStorage.getItem('@StudentName:key');
+       this.setState({student: value});
+        fetch(url + "/my/" + value)
+            .then(async (response) => {
+                return await response.json();
+            })
+            .then(resp => {
+                console.log(resp);
+                this.setState({data: resp});
+            });
+    };
 
     async getKey() {
         try {
@@ -56,6 +56,10 @@ export default class MyList extends React.Component {
         this.props.navigation.navigate('NewRequest');
     };
 
+    componentDidMount(): void {
+        this.showStudentData()
+    }
+
     render() {
         return (
             <>
@@ -71,8 +75,8 @@ export default class MyList extends React.Component {
 
                     <View style={styles.container}>
                         <FlatList
-                            data={this.state.DATA}
-                            renderItem={({ item }) => <Item title={item.title} name={item.name}/>}
+                            data={this.state.data}
+                            renderItem={({ item }) => <Item name={item.name} status={item.status}/>}
                             keyExtractor={item => item.id}
                         />
                     </View>
@@ -80,14 +84,11 @@ export default class MyList extends React.Component {
                     <View style={styles.container3}>
                         <Button title="Sign Out"
                                 color="#30516E" onPress={this._signOutAsync} />
-                        <Button title="Value"
-                                color="#30516E" onPress={this.getKey.bind(this)} />
-                        <Button title="Record a request"
+                        <Button title="Add request"
                                 color="#30516E" onPress={this._recordARequestAsync} />
                     </View>
                 </View>
             </>
-
         );
     }
 };
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         margin: 20,
+        backgroundColor: '#30516E',
     },
 
     container2: {
@@ -120,6 +122,16 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 42,
+        fontSize: 22
+    },
+
+    item: {
+        backgroundColor: '#f0f6f7',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
     },
 });

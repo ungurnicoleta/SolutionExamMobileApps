@@ -2,13 +2,13 @@ import React from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-
 export default class MyInput extends React.Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            student: null
+            student: null,
+            data: []
         }
     }
 
@@ -20,6 +20,7 @@ export default class MyInput extends React.Component{
     async saveKey(value) {
         try {
             await AsyncStorage.setItem('@StudentName:key', value);
+            console.log(value);
         } catch (error) {
             console.log("Error saving data" + error);
         }
