@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, View, StyleSheet, TextInput, Text, Picker,} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
+import * as NetInfo from '@react-native-community/netinfo';
 
 const url = "http://192.168.43.120:2902";
 
@@ -13,7 +14,8 @@ export default class NewRequest extends React.Component {
             name: "",
             myStatus: "",
             eCost: null,
-            cost: null
+            cost: null,
+            myData: []
         }
     }
 
@@ -43,7 +45,19 @@ export default class NewRequest extends React.Component {
         console.log(this.state.cost);
     };
 
-     _addData = async () => {
+
+    storeData = async (data) => {
+        try {
+            await AsyncStorage.setItem('@DATA:key', JSON.stringify(data));
+            console.log(JSON.stringify(data));
+        } catch (e) {
+            console.log("Sth is not working in storeData method.")
+        }
+    };
+
+
+
+    _addData = async () => {
         const value = await AsyncStorage.getItem('@StudentName:key');
         console.log(url + "/request");
         const data = {
@@ -55,17 +69,29 @@ export default class NewRequest extends React.Component {
         };
         console.log(url + "/request");
         console.log(data);
-        fetch(url + "/request", {
-            method: 'POST',
-            headers: new Headers({
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }),
-            body: JSON.stringify(data),
-        }).then(response => {
-            console.log(response.status);
-        }).then(this.props.navigation.navigate('Home'));
-     }
+         NetInfo.fetch().then(async state => {
+             console.log("Connection type", state.type);
+             console.log("Is connected?", state.isConnected);
+             if (state.isConnected === true) {
+                 fetch(url + "/request", {
+                     method: 'POST',
+                     headers: new Headers({
+                         'Accept': 'application/json',
+                         'Content-Type': 'application/json',
+                     }),
+                     body: JSON.stringify(data),
+                 }).then(response => {
+                     console.log(response.status);
+
+                 }).then(this.props.navigation.navigate('Home'))
+             } else {
+                 await this.storeData(data);
+                 console.log('Is not online');
+                 this.props.navigation.navigate('Home')
+             }
+         }
+     )};
+
 
     render() {
         return (

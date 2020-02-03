@@ -17,11 +17,30 @@ export default class MyList extends React.Component {
         super(props);
         this.state = {
             student: null,
-            data : []
+            data : [],
+            newData: []
         };
     }
 
    async showStudentData() {
+       const toBeStored = await AsyncStorage.getItem('@DATA:key');
+       console.log(toBeStored);
+       if (toBeStored !== null) {
+           console.log(toBeStored);
+           fetch(url + "/request", {
+               method: 'POST',
+               headers: new Headers({
+                   'Accept': 'application/json',
+                   'Content-Type': 'application/json',
+               }),
+               body: toBeStored,
+           }).then(response => {
+               console.log(response.status);
+           });
+           this.setState({myData: []});
+           await AsyncStorage.setItem('@DATA:key', JSON.stringify(this.state.myData));
+       }
+
         const value = await AsyncStorage.getItem('@StudentName:key');
         this.setState({student: value});
         fetch(url + "/my/" + value)
@@ -31,17 +50,13 @@ export default class MyList extends React.Component {
             .then(resp => {
                 console.log(resp);
                 this.setState({data: resp});
+                if (this.state.newData !== null){
+                    const joined = this.state.data.concat(this.state.newData);
+                    this.setState({ data: joined });
+                }
             });
     };
 
-    async getKey() {
-        try {
-            const value = await AsyncStorage.getItem('@StudentName:key');
-            this.setState({student: value});
-        } catch (error) {
-            console.log("Error retrieving data" + error);
-        }
-    }
 
     static navigationOptions = {
         title: 'My List',
@@ -53,7 +68,7 @@ export default class MyList extends React.Component {
     };
 
     _recordARequestAsync = async () => {
-        this.props.navigation.navigate('NewRequest');
+        this.props.navigation.navigate('NewRequest', {data: this.state.data});
     };
 
     componentDidMount(): void {
