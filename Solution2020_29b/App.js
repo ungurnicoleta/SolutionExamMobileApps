@@ -15,8 +15,9 @@ import SignInPage from './src/pages/signInPage';
 import AuthLoadingScreen from './src/pages/authLoadingScreen';
 
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
+import NewRequest from './src/pages/newRequest';
 
-const AppStack = createStackNavigator({ Home: HomePage,  MyList: MyList});
+const AppStack = createStackNavigator({ Home: HomePage,  MyList: MyList, NewRequest: NewRequest});
 const AuthStack = createStackNavigator({ SignIn: SignInPage });
 
 export default createAppContainer(createSwitchNavigator(

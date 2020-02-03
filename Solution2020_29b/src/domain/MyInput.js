@@ -6,6 +6,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class MyInput extends React.Component{
     constructor(props) {
         super(props);
+
+        this.state = {
+            student: null
+        }
     }
 
     static navigationOptions = {
@@ -13,16 +17,13 @@ export default class MyInput extends React.Component{
     };
 
 
-    storeData = async () => {
+    async saveKey(value) {
         try {
-            await AsyncStorage.setItem('@StudentName', "nico");
-            console.log("Yey");
-            alert("did it")
-        } catch (e){
-            alert(e)
-            //alert("Insert student's name") // error
+            await AsyncStorage.setItem('@StudentName:key', value);
+        } catch (error) {
+            console.log("Error saving data" + error);
         }
-    };
+    }
 
     render() {
         return (
@@ -32,7 +33,7 @@ export default class MyInput extends React.Component{
                     marginLeft: 20,
                     marginRight: 20, display: 'flex', alignContent: "center"
                 }}>
-                <Text style={{fontWeight: "bold"}}>Student's name</Text>
+                <Text style={{fontWeight: "bold", textAlign: "center"}}>Student's name</Text>
                 <TextInput
                     style={{
                         height: 40,
@@ -43,17 +44,8 @@ export default class MyInput extends React.Component{
                     }}
                     editable
                     maxLength={40}
-                />
-                <Button
-                    style={{marginTop: 30}}
-                    title="Let me in"
-                    color="#30516E"
-                    onPress={() => this.props.navigation.navigate('MyList')}
-                />
-
-                <Button
-                    title="Switch page"
-                    onPress={() => this.props.navigation.navigate('MyList')}
+                    value={this.state.student}
+                    onChangeText={(value) => this.saveKey(value)}
                 />
             </View>
         );

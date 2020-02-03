@@ -5,13 +5,16 @@ import MyInput from '../domain/MyInput';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            student: null
+        }
+    }
     static navigationOptions = {
         title: 'Welcome to the app!',
     };
 
-    constructor(props) {
-        super(props);
-    }
     _showMoreApp = () => {
         this.props.navigation.navigate('MyList');
     };
@@ -21,19 +24,28 @@ export default class HomePage extends React.Component {
         this.props.navigation.navigate('Auth');
     };
 
+    async getKey() {
+        try {
+            const value = await AsyncStorage.getItem('@StudentName:key');
+            this.setState({student: value});
+            alert(value)
+        } catch (error) {
+            console.log("Error retrieving data" + error);
+        }
+    }
+
     render() {
         return (
-            <>
+            <View style={styles.viewContainer}>
                 <MyInput/>
+
                 <Button
-                    title="Switch page"
+                    style={{marginTop: 30}}
+                    title="Let me in"
+                    color="#30516E"
                     onPress={() => this.props.navigation.navigate('MyList')}
                 />
-                <View style={styles.container}>
-                    <Button title="Show me more of the app" onPress={this._showMoreApp}/>
-                    <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
-                </View>
-            </>
+            </View>
         );
     }
 }
@@ -45,4 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    viewContainer: {
+        margin: 40
+    }
 });
