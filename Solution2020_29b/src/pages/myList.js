@@ -23,7 +23,7 @@ export default class MyList extends React.Component {
 
    async showStudentData() {
         const value = await AsyncStorage.getItem('@StudentName:key');
-       this.setState({student: value});
+        this.setState({student: value});
         fetch(url + "/my/" + value)
             .then(async (response) => {
                 return await response.json();
@@ -77,7 +77,7 @@ export default class MyList extends React.Component {
                         <FlatList
                             data={this.state.data}
                             renderItem={({ item }) => <Item name={item.name} status={item.status}/>}
-                            keyExtractor={item => item.id}
+                            keyExtractor={item => item.id.toString()}
                         />
                     </View>
 
