@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, StyleSheet, View} from 'react-native';
 import MyInput from '../domain/MyInput';
-import AsyncStorage from '@react-native-community/async-storage';
 
 export default class HomePage extends React.Component {
     constructor(props) {
@@ -19,6 +18,7 @@ export default class HomePage extends React.Component {
 
     render() {
         return (
+            <>
             <View style={styles.viewContainer}>
                 <MyInput/>
 
@@ -28,7 +28,25 @@ export default class HomePage extends React.Component {
                     color="#30516E"
                     onPress={() => this.props.navigation.navigate('MyList')}
                 />
+
             </View>
+            <View style={styles.viewContainer2}>
+                <Button
+                    style={{ margin: 30}}
+                    title="FILLED EXPENSES"
+                    color="#30516E"
+                    onPress={() => this.props.navigation.navigate('GetAllFilled')}
+                />
+            </View>
+            <View style={styles.viewContainer3}>
+                <Button
+                    style={{ margin: 30}}
+                    title="OPEN EXPENSES"
+                    color="#30516E"
+                    onPress={() => this.props.navigation.navigate('GetAllOpen')}
+                />
+            </View>
+            </>
         );
     }
 }
@@ -40,6 +58,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    viewContainer2: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    viewContainer3: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 30
+    },
+
     viewContainer: {
         margin: 40
     }

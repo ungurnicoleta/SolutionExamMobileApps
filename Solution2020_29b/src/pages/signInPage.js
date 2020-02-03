@@ -16,7 +16,8 @@ export default class SignInPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="Sign in!" onPress={this._signInAsync} />
+                <Button title="Sign in!"
+                        color="#30516E" onPress={this._signInAsync} />
             </View>
         );
     }

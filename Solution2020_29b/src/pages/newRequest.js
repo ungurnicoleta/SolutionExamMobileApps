@@ -4,7 +4,7 @@ import {Button, View, StyleSheet, TextInput, Text, Picker,} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
 
-const url = "http://192.168.43.120:2902";
+const url = "http://192.168.1.4:2902";
 
 export default class NewRequest extends React.Component {
     constructor(props) {
@@ -85,6 +85,7 @@ export default class NewRequest extends React.Component {
 
                  }).then(this.props.navigation.navigate('Home'))
              } else {
+                 alert("You are offline!");
                  await this.storeData(data);
                  console.log('Is not online');
                  this.props.navigation.navigate('Home')

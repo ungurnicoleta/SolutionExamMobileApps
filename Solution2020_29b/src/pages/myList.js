@@ -1,8 +1,9 @@
 import React from 'react';
-import {Button, StatusBar, View, StyleSheet, Text, FlatList} from 'react-native';
+import {Button, StatusBar, View, StyleSheet, Text, FlatList, AlertStatic as Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as NetInfo from '@react-native-community/netinfo';
 
-const url = "http://192.168.43.120:2902";
+const url = "http://192.168.1.4:2902";
 
 function Item({ name, status }) {
     return (
@@ -40,21 +41,31 @@ export default class MyList extends React.Component {
            this.setState({myData: []});
            await AsyncStorage.setItem('@DATA:key', JSON.stringify(this.state.myData));
        }
+       const value = await AsyncStorage.getItem('@StudentName:key');
+       this.setState({student: value});
 
-        const value = await AsyncStorage.getItem('@StudentName:key');
-        this.setState({student: value});
-        fetch(url + "/my/" + value)
-            .then(async (response) => {
-                return await response.json();
-            })
-            .then(resp => {
-                console.log(resp);
-                this.setState({data: resp});
-                if (this.state.newData !== null){
-                    const joined = this.state.data.concat(this.state.newData);
-                    this.setState({ data: joined });
-                }
-            });
+       NetInfo.fetch().then(async state => {
+           console.log("Connection type", state.type);
+           console.log("Is connected?", state.isConnected);
+           if (state.isConnected === true) {
+
+               fetch(url + "/my/" + value)
+                   .then(async (response) => {
+                       return await response.json();
+                   })
+                   .then(resp => {
+                       console.log(resp);
+                       this.setState({data: resp});
+                       if (this.state.newData !== null) {
+                           const joined = this.state.data.concat(this.state.newData);
+                           this.setState({data: joined});
+                       }
+                   });
+           }
+           else {
+               alert("You are offline!!");
+           }
+    })
     };
 
 
