@@ -82,8 +82,8 @@ export default class NewRequest extends React.Component {
                      body: JSON.stringify(data),
                  }).then(response => {
                      console.log(response.status);
-
-                 }).then(this.props.navigation.navigate('Home'))
+                 }).then(alert("The data was added: \n" + "Name: " + data.name + "\neCost: " + data.eCost + " \nStudent: "
+                     + value )).then(this.props.navigation.navigate('Home'))
              } else {
                  alert("You are offline!");
                  await this.storeData(data);

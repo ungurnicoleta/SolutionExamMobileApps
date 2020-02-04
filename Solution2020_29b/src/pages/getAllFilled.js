@@ -1,11 +1,10 @@
 import React from 'react';
 import {
     Button,
-    StatusBar,
     View,
     StyleSheet,
     Text,
-    FlatList,
+    FlatList, ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -14,7 +13,9 @@ const url = "http://192.168.1.4:2902";
 function Item({ name, cost, eCost }) {
     return (
         <View style={styles.item}>
-            <Text style={styles.text}>{name} --> cost: {cost} || eCost: {eCost}</Text>
+            <Text style={styles.text}>Name: {name} </Text>
+            <Text style={styles.text2}>cost: {cost} </Text>
+            <Text style={styles.text2}>eCost: {eCost}</Text>
         </View>
     );
 }
@@ -25,7 +26,8 @@ export default class GetAllFilled extends React.Component {
         this.state = {
             student: null,
             data : [],
-            newData: []
+            newData: [],
+            loaded: false
         };
     }
 
@@ -40,6 +42,7 @@ export default class GetAllFilled extends React.Component {
                 if (this.state.newData !== null) {
                     const joined = this.state.data.concat(this.state.newData);
                     this.setState({data: joined});
+                    this.setState({loaded: true});
                 }
             });
     };
@@ -54,8 +57,14 @@ export default class GetAllFilled extends React.Component {
         this.props.navigation.navigate('SignIn');
     };
 
-    componentDidMount(): void {
-        this.showData()
+    async componentDidMount(): void {
+        setTimeout(function () {
+            console.log("wait")
+            },
+            2000
+        );
+        await this.showData();
+        this.setState({loaded: false});
     }
 
     render() {
@@ -68,16 +77,22 @@ export default class GetAllFilled extends React.Component {
                     alignItems: 'stretch',
                 }}>
                     <View style={styles.container2} >
-                        <Text style={styles.header}>EXPENSES</Text>
+                        <Text style={styles.header}>FILLED EXPENSES</Text>
                     </View>
 
-                    <View style={styles.container}>
-                        <FlatList
-                            data={this.state.data.sort((a, b) => a.cost - b.cost).reverse()}
-                            renderItem={({ item }) => <Item name={item.name} cost={item.cost} eCost={item.eCost}/>}
-                            keyExtractor={item => item.id.toString()}
-                        />
-                    </View>
+                    {this.state.loaded ?
+                        <View style={styles.container}>
+                            <FlatList
+                                data={this.state.data.sort((a, b) => a.cost - b.cost).reverse()}
+                                renderItem={({ item }) => <Item name={item.name} cost={item.cost} eCost={item.eCost}/>}
+                                keyExtractor={item => item.id.toString()}
+                            />
+                        </View>
+                        :
+                        <View style={[styles.container, styles.horizontal]}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </View>
+                        }
 
                     <View style={styles.container3}>
                         <Button title="Sign Out"
@@ -85,15 +100,13 @@ export default class GetAllFilled extends React.Component {
                     </View>
                 </View>
             </>
-        );
-    }
+        ); }
 };
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 20,
         backgroundColor: '#30516E',
     },
 
@@ -106,7 +119,7 @@ const styles = StyleSheet.create({
     container3:{
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: 100,
+        height: 50,
         backgroundColor: 'steelblue',
         flexDirection: 'row',
     },
@@ -118,16 +131,26 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 22
+        flex: 3,
+        fontSize:18,
     },
 
+    text2: {
+        flex: 2,
+        fontSize:18,
+        alignItems: 'flex-end',
+        justifyContent: "flex-end"
+    },
     item: {
-        backgroundColor: '#f0f6f7',
-        padding: 20,
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
         marginVertical: 8,
-        marginHorizontal: 16,
+        marginHorizontal:13,
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: '#d6d7da',
+        backgroundColor: "#FAF3E3",
+        height: 40
     },
 });

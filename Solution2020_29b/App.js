@@ -18,8 +18,9 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import NewRequest from './src/pages/newRequest';
 import GetAll from './src/pages/getAllFilled';
 import GetAllOpen from './src/pages/getAllOpen';
+import Change from './src/pages/Change';
 
-const AppStack = createStackNavigator({ Home: HomePage,  MyList: MyList, NewRequest: NewRequest, GetAllFilled: GetAll, GetAllOpen: GetAllOpen});
+const AppStack = createStackNavigator({ Home: HomePage,  MyList: MyList, NewRequest: NewRequest, GetAllFilled: GetAll, GetAllOpen: GetAllOpen, Change: Change });
 const AuthStack = createStackNavigator({ SignIn: SignInPage });
 
 export default createAppContainer(createSwitchNavigator(
