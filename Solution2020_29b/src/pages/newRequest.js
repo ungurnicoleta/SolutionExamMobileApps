@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, View, StyleSheet, TextInput, Text, Picker,} from 'react-native';
+import {Button, View, StyleSheet, TextInput, Text, Picker, ToastAndroid} from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
@@ -15,8 +15,30 @@ export default class NewRequest extends React.Component {
             myStatus: "open",
             eCost: null,
             cost: null,
-            myData: []
-        }
+            myData: [],
+            open: false,
+            student: ""
+        };
+
+        this.socket = new WebSocket("ws://192.168.1.4:2902/");
+        this.emit = this.emit.bind(this);
+    }
+
+    emit() {
+        this.setState(prevState => ({
+            open: !prevState.open
+        }));
+        this.socket.send("It worked!")
+    }
+
+    componentDidMount() : void{
+        this.socket.onopen = () => this.socket.send(JSON.stringify({
+            name: this.state.name,
+            status: this.state.myStatus
+        }));
+        this.socket.onmessage = () => ToastAndroid.show("Name: " + this.state.name + "\n"
+            + "Student: " + this.state.student + "\n"
+            + "eCost: " + this.state.eCost, ToastAndroid.SHORT);
     }
 
     static navigationOptions = {
@@ -59,6 +81,7 @@ export default class NewRequest extends React.Component {
 
     _addData = async () => {
         const value = await AsyncStorage.getItem('@StudentName:key');
+        this.setState({ student: value });
         console.log(url + "/request");
         const data = {
             name: this.state.name,
@@ -69,9 +92,10 @@ export default class NewRequest extends React.Component {
         };
         console.log(url + "/request");
         console.log(data);
-         NetInfo.fetch().then(async state => {
-             console.log("Connection type", state.type);
-             console.log("Is connected?", state.isConnected);
+        NetInfo.fetch()
+             .then(async state => {
+                    console.log("Connection type", state.type);
+                    console.log("Is connected?", state.isConnected);
              if (state.isConnected === true) {
                  fetch(url + "/request", {
                      method: 'POST',
@@ -79,13 +103,17 @@ export default class NewRequest extends React.Component {
                          'Accept': 'application/json',
                          'Content-Type': 'application/json',
                      }),
-                     body: JSON.stringify(data),
-                 }).then(response => {
-                     console.log(response.status);
-                 }).then(alert("The data was added: \n" + "Name: " + data.name + "\neCost: " + data.eCost + " \nStudent: "
-                     + value )).then(this.props.navigation.navigate('Home'))
-             } else {
-                 alert("You are offline!");
+                     body: JSON.stringify(data),})
+                     .then(response => {console.log(response.status);})
+                     .then(alert("The data was added: \n" + "Name: " + data.name + "\neCost: " + data.eCost + " \nStudent: "
+                                + value ))
+                     .then(this.emit)
+                     .then(this.props.navigation.navigate('Home'))
+             }
+             else
+                 {
+                 alert("You are offline! \nThe data was added: \n Name: " + data.name + "\neCost: " +
+                     data.eCost +" \nStudent: \n" + value);
                  await this.storeData(data);
                  console.log('Is not online');
                  this.props.navigation.navigate('Home')

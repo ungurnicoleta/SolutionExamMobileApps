@@ -29,11 +29,12 @@ export default class MyList extends React.Component {
             student: null,
             data : [],
             newData: [],
-            loaded: false
+            loaded: false,
         };
     }
 
-   async showStudentData() {
+
+    async showStudentData() {
        const toBeStored = await AsyncStorage.getItem('@DATA:key');
        console.log(toBeStored);
        if (toBeStored !== null) {
@@ -58,7 +59,6 @@ export default class MyList extends React.Component {
            console.log("Connection type", state.type);
            console.log("Is connected?", state.isConnected);
            if (state.isConnected === true) {
-
                fetch(url + "/my/" + value)
                    .then(async (response) => {
                        return await response.json();
@@ -74,7 +74,7 @@ export default class MyList extends React.Component {
                    });
            }
            else {
-               alert("You are offline!!");
+              alert("try again!!")
            }
     })
     };
@@ -103,6 +103,7 @@ export default class MyList extends React.Component {
         this.setState({loaded: false});
     }
 
+
     render() {
         return (
             <>
@@ -126,6 +127,8 @@ export default class MyList extends React.Component {
                         :
                         <View style={[styles.container, styles.horizontal]}>
                             <ActivityIndicator size="large" color="#0000ff" />
+                            <Button title="Retry"
+                                    color='#7e2242' onPress={() => this.showStudentData() }/>
                         </View>
                     }
 

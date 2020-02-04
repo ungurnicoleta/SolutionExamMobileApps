@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed5cc0ed-d8aa-4022-a84b-f0b348469acb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/domain/MyInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/domain/MyInput.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/myList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/myList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/newRequest.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
