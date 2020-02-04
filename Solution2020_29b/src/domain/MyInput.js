@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Text, TextInput, View} from 'react-native';
+import {Button, Image, Text, TextInput, View} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default class MyInput extends React.Component{
@@ -30,11 +30,13 @@ export default class MyInput extends React.Component{
         return (
             <View
                 style={{
-                    marginTop: 300,
-                    marginLeft: 20,
-                    marginRight: 20, display: 'flex', alignContent: "center"
+                    marginTop: 50,
+                    marginLeft: 10,
+                    marginRight: 10,
                 }}>
-                <Text style={{fontWeight: "bold", textAlign: "center"}}>Student's name</Text>
+                <Image source={require('../myApp.png')} style={{width: 200, height: 250, alignSelf: "center", marginBottom: 20}}/>
+
+                <Text style={{fontWeight: "bold", textAlign: "center", marginBottom: 20}}>Student's name</Text>
                 <TextInput
                     style={{
                         height: 40,

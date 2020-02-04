@@ -27,7 +27,7 @@ class Item extends React.Component{
             <View style={styles.item}>
                 <Text style={styles.text}>Name: {this.props.name}</Text>
                 <Text style={styles.text2}>eCost: {this.props.eCost}</Text>
-                <Button style={styles.btn} color='skyblue' title="+" onPress={this.myPress}/>
+                <Button style={styles.btn} color='#7e2242' title="+" onPress={this.myPress}/>
             </View>
         );
     }
@@ -64,7 +64,7 @@ export default class GetAllOpen extends React.Component {
                     setTimeout(function () {
                             console.log("wait...")
                         },
-                        2000
+                        50000
                     );
                     this.setState({loaded: true});
                 }
@@ -121,7 +121,7 @@ export default class GetAllOpen extends React.Component {
 
                     <View style={styles.container3}>
                         <Button title="Sign Out"
-                                color="#30516E" onPress={this._signOutAsync} />
+                                color='#7e2242' onPress={this._signOutAsync} />
                     </View>
                 </View>
             </>
@@ -139,14 +139,14 @@ const styles = StyleSheet.create({
     container2: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50, backgroundColor: 'skyblue'
+        height: 50, backgroundColor: 'white'
     },
 
     container3:{
         alignItems: 'center',
         justifyContent: 'space-around',
         height: 50,
-        backgroundColor: 'steelblue',
+        backgroundColor: 'white',
         flexDirection: 'row',
     },
 
@@ -175,9 +175,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal:13,
         borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
-        backgroundColor: "#FAF3E3"
+        borderWidth: 1,
+        borderColor: '#7e2242',
+        backgroundColor: "white",
     },
 
     btn:{

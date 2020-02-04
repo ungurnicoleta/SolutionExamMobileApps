@@ -12,7 +12,7 @@ export default class NewRequest extends React.Component {
 
         this.state = {
             name: "",
-            myStatus: "",
+            myStatus: "open",
             eCost: null,
             cost: null,
             myData: []
@@ -143,7 +143,9 @@ export default class NewRequest extends React.Component {
                 />
 
                 <Text style={{fontWeight: "bold", textAlign: "center"}}>Status</Text>
-                <Picker selectedValue = {this.state.myStatus} onValueChange = {this.updateStatus} style={styles.picker}>
+                <Picker selectedValue = {this.state.myStatus}
+                        onValueChange = {this.updateStatus}
+                        style={styles.picker}>
                     <Picker.Item label = "Open" value = "open" />
                     <Picker.Item label = "Canceled" value = "canceled" />
                     <Picker.Item label = "Filled" value = "filled" />

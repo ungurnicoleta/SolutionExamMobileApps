@@ -61,7 +61,7 @@ export default class GetAllFilled extends React.Component {
         setTimeout(function () {
             console.log("wait")
             },
-            2000
+            5000
         );
         await this.showData();
         this.setState({loaded: false});
@@ -96,7 +96,7 @@ export default class GetAllFilled extends React.Component {
 
                     <View style={styles.container3}>
                         <Button title="Sign Out"
-                                color="#30516E" onPress={this._signOutAsync} />
+                                color='#7e2242' onPress={this._signOutAsync} />
                     </View>
                 </View>
             </>
@@ -113,14 +113,15 @@ const styles = StyleSheet.create({
     container2: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50, backgroundColor: 'skyblue'
+        height: 50,
+        backgroundColor: 'white'
     },
 
     container3:{
         alignItems: 'center',
         justifyContent: 'space-around',
         height: 50,
-        backgroundColor: 'steelblue',
+        backgroundColor: 'white',
         flexDirection: 'row',
     },
 
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: "flex-end"
     },
+
     item: {
         flex: 1,
         flexDirection: "row",
@@ -148,9 +150,9 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal:13,
         borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
-        backgroundColor: "#FAF3E3",
+        borderWidth: 1,
+        borderColor: '#7e2242',
+        backgroundColor: "white",
         height: 40
     },
 });

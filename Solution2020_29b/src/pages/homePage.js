@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {Button, StyleSheet, View, ToastAndroid} from 'react-native';
 import MyInput from '../domain/MyInput';
 
 export default class HomePage extends React.Component {
@@ -11,64 +11,78 @@ export default class HomePage extends React.Component {
         };
     }
 
+
     static navigationOptions = {
         title: 'Welcome to the app!',
+        headerStyle: {
+            backgroundColor: "white",
+        },
+        headerTintColor: 'black',
+        headerRight: () => (
+            <View style ={{marginRight: 20}}>
+                <Button
+                    onPress={() => {
+                        //function to make Toast With Duration
+                        ToastAndroid.show('This app was made for the exam', ToastAndroid.SHORT);
+                    }}
+                    title="Info"
+                    color="#30516E"
+                    style ={{marginRight: 20}}
+                />
+            </View>
+
+        ),
     };
 
 
     render() {
         return (
-            <>
-            <View style={styles.viewContainer}>
-                <MyInput/>
+            <View style={styles.container}>
+                <View style={styles.viewContainer1}>
+                    <MyInput/>
+                    <Button
+                        style={{marginTop: 50}}
+                        title="Let me in"
+                        color='#7e2242'
+                        onPress={() => this.props.navigation.navigate('MyList')}
+                    />
+                </View>
+                <View style={styles.viewContainer2}>
+                    <Button
+                        style={styles.btn}
+                        title="FILLED EXPENSES"
+                        color="#30516E"
+                        onPress={() => this.props.navigation.navigate('GetAllFilled')}
+                    />
 
-                <Button
-                    style={{marginTop: 30}}
-                    title="Let me in"
-                    color="#30516E"
-                    onPress={() => this.props.navigation.navigate('MyList')}
-                />
-
+                    <Button
+                        style={styles.btn}
+                        title="OPEN EXPENSES"
+                        color="#30516E"
+                        onPress={() => this.props.navigation.navigate('GetAllOpen')}
+                    />
+                </View>
             </View>
-            <View style={styles.viewContainer2}>
-                <Button
-                    style={{ margin: 30}}
-                    title="FILLED EXPENSES"
-                    color="#30516E"
-                    onPress={() => this.props.navigation.navigate('GetAllFilled')}
-                />
-            </View>
-            <View style={styles.viewContainer3}>
-                <Button
-                    style={{ margin: 30}}
-                    title="OPEN EXPENSES"
-                    color="#30516E"
-                    onPress={() => this.props.navigation.navigate('GetAllOpen')}
-                />
-            </View>
-            </>
         );
     }
 }
 
 
 const styles = StyleSheet.create({
-    container: {
+    container:{
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: "column",
+        backgroundColor: "white",
     },
-    viewContainer2: {
-        alignItems: 'center',
-        justifyContent: 'center',
+    viewContainer1:{
+        margin: 30,
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
-    viewContainer3: {
+    viewContainer2:{
+        flex: 3,
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 30
-    },
-
-    viewContainer: {
-        margin: 40
+        justifyContent: 'space-around'
     }
 });

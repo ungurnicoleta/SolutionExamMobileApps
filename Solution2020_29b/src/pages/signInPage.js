@@ -2,10 +2,8 @@ import * as React from 'react';
 import {
     Button,
     View,
-    StyleSheet
+    StyleSheet, Image,
 } from 'react-native';
-
-import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class SignInPage extends React.Component {
@@ -16,14 +14,18 @@ export default class SignInPage extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Button title="Sign in!"
-                        color="#30516E" onPress={this._signInAsync} />
+                <Image source={require('../signIn.png')} style={{width: 200, height: 250, alignSelf: "center", marginBottom: 100}}/>
+                <View style={{ width: 200, height: 100, marginTop: 10}}>
+                    <Button title="Sign in!"
+                            style={{alignSelf: 'stretch'}}
+                            color='#7e2242'
+                            onPress={this._signInAsync} />
+                </View>
             </View>
         );
     }
 
     _signInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc');
         this.props.navigation.navigate('App');
     };
 }
@@ -34,5 +36,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: "white"
     },
 });

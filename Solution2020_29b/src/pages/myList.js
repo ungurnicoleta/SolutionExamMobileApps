@@ -1,5 +1,14 @@
 import React from 'react';
-import {Button, StatusBar, View, StyleSheet, Text, FlatList, AlertStatic as Alert} from 'react-native';
+import {
+    Button,
+    StatusBar,
+    View,
+    StyleSheet,
+    Text,
+    FlatList,
+    AlertStatic as Alert,
+    ActivityIndicator,
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
 
@@ -19,7 +28,8 @@ export default class MyList extends React.Component {
         this.state = {
             student: null,
             data : [],
-            newData: []
+            newData: [],
+            loaded: false
         };
     }
 
@@ -59,6 +69,7 @@ export default class MyList extends React.Component {
                        if (this.state.newData !== null) {
                            const joined = this.state.data.concat(this.state.newData);
                            this.setState({data: joined});
+                           this.setState({loaded: true});
                        }
                    });
            }
@@ -83,7 +94,13 @@ export default class MyList extends React.Component {
     };
 
     componentDidMount(): void {
-        this.showStudentData()
+        setTimeout(function () {
+                console.log("wait")
+            },
+            5000
+        );
+        this.showStudentData();
+        this.setState({loaded: false});
     }
 
     render() {
@@ -98,7 +115,7 @@ export default class MyList extends React.Component {
                     <View style={styles.container2} >
                         <Text style={styles.header}>{this.state.student!==null? "Hello " + this.state.student: "Hello anonymous"}</Text>
                     </View>
-
+                    {this.state.loaded ?
                     <View style={styles.container}>
                         <FlatList
                             data={this.state.data}
@@ -106,12 +123,18 @@ export default class MyList extends React.Component {
                             keyExtractor={item => item.id.toString()}
                         />
                     </View>
+                        :
+                        <View style={[styles.container, styles.horizontal]}>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </View>
+                    }
+
 
                     <View style={styles.container3}>
                         <Button title="Sign Out"
-                                color="#30516E" onPress={this._signOutAsync} />
+                                color='#7e2242' onPress={this._signOutAsync} />
                         <Button title="Add request"
-                                color="#30516E" onPress={this._recordARequestAsync} />
+                                color='#7e2242' onPress={this._recordARequestAsync} />
                     </View>
                 </View>
             </>
@@ -123,21 +146,21 @@ export default class MyList extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: 20,
         backgroundColor: '#30516E',
     },
 
     container2: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50, backgroundColor: 'skyblue'
+        height: 50,
+        backgroundColor: 'white'
     },
 
     container3:{
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: 100,
-        backgroundColor: 'steelblue',
+        height: 70,
+        backgroundColor: "white",
         flexDirection: 'row',
     },
 
@@ -148,16 +171,17 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontSize: 22
+        flex: 3,
+        fontSize: 18
     },
 
     item: {
-        backgroundColor: '#f0f6f7',
+        backgroundColor: 'white',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da',
+        borderWidth: 1,
+        borderColor: '#7e2242',
     },
 });
