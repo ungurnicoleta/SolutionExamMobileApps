@@ -15,7 +15,7 @@ export default function LinksScreen() {
 }
 
 LinksScreen.navigationOptions = {
-  title: 'Links',
+  title: 'MyProfile',
 };
 
 const styles = StyleSheet.create({

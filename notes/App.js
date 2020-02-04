@@ -4,8 +4,14 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux'
+import notesReducer from './store/reducers/notes'
 
 import AppNavigator from './navigation/AppNavigator';
+import {combineReducers, createStore} from "redux";
+
+const rootReducer = combineReducers({notes: notesReducer});
+const store = createStore(rootReducer)
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -22,7 +28,9 @@ export default function App(props) {
     return (
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        <Provider store={store}>
+            <AppNavigator/>
+        </Provider>
       </View>
     );
   }
