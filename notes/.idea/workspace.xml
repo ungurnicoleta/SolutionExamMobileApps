@@ -3,15 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ed5cc0ed-d8aa-4022-a84b-f0b348469acb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/domain/MyInput.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/domain/MyInput.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/Change.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/Change.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/authLoadingScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/authLoadingScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/getAllFilled.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/getAllFilled.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/getAllOpen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/getAllOpen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/homePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/homePage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/myList.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/myList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/newRequest.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/newRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Solution2020_29b/src/pages/signInPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Solution2020_29b/src/pages/signInPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />

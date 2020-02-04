@@ -96,65 +96,70 @@ export default class NewRequest extends React.Component {
 
     render() {
         return (
-            <>
+            <View style={styles.container}>
             <View style={styles.viewContainer}>
-                <Text style={{fontWeight: "bold", textAlign: "center"}}>Expense's name</Text>
+                <Text style={{fontWeight: "bold"}}>Name</Text>
                 <TextInput
                     style={{
                         height: 40,
-                        borderColor: 'gray',
+                        borderColor: '#7e2242',
                         borderWidth: 1,
-                        marginTop: 20,
                         marginBottom: 20
                     }}
                     editable
                     maxLength={40}
                     value={this.state.name}
+                    placeholder="Name"
                     onChangeText={this.updateName}
                 />
 
-                <Text style={{fontWeight: "bold", textAlign: "center"}}>eCost</Text>
+                <Text style={{fontWeight: "bold"}}>eCost</Text>
                 <TextInput
                     style={{
                         height: 40,
-                        borderColor: 'gray',
+                        borderColor: '#7e2242',
                         borderWidth: 1,
-                        marginTop: 20,
                         marginBottom: 20
                     }}
                     editable
                     maxLength={40}
                     value={this.state.eCost}
+                    placeholder="eCost"
                     onChangeText={this.updateECost}
                 />
-                <Text style={{fontWeight: "bold", textAlign: "center"}}>Cost</Text>
+                <Text style={{fontWeight: "bold"}}>Cost</Text>
                 <TextInput
                     style={{
                         height: 40,
-                        borderColor: 'gray',
+                        borderColor: '#7e2242',
                         borderWidth: 1,
-                        marginTop: 20,
                         marginBottom: 20
                     }}
                     editable
                     maxLength={40}
+                    placeholder="Cost"
                     value={this.state.cost}
                     onChangeText={this.updateCost}
                 />
+                <Text style={{fontWeight: "bold"}}>Status</Text>
+                <View style={styles.view4}>
+                    <Picker selectedValue = {this.state.myStatus}
+                            onValueChange = {this.updateStatus}
+                            style={styles.picker}>
+                        <Picker.Item label = "Open" value = "open" />
+                        <Picker.Item label = "Canceled" value = "canceled" />
+                        <Picker.Item label = "Filled" value = "filled" />
+                        <Picker.Item label = "Postponed" value = "postponed" />
+                    </Picker>
+                </View>
 
-                <Text style={{fontWeight: "bold", textAlign: "center"}}>Status</Text>
-                <Picker selectedValue = {this.state.myStatus}
-                        onValueChange = {this.updateStatus}
-                        style={styles.picker}>
-                    <Picker.Item label = "Open" value = "open" />
-                    <Picker.Item label = "Canceled" value = "canceled" />
-                    <Picker.Item label = "Filled" value = "filled" />
-                    <Picker.Item label = "Postponed" value = "postponed" />
-                </Picker>
             </View>
-            <Button title="Add Request" style={{marginTop: 40}}
-                color="#30516E" onPress={this._addData}/>
-        </>
+                <View style={styles.viewContainer1}>
+                    <Button title="Add Request" style={{marginTop: 40}}
+                            color="#30516E" onPress={this._addData}/>
+                </View>
+
+        </View>
         );
     }
 
@@ -166,13 +171,22 @@ export default class NewRequest extends React.Component {
 
 
 const styles = StyleSheet.create({
-    viewContainer: {
-        margin: 40
+    container:{
+        flex: 1,
+        backgroundColor: "white",
     },
-    picker: {
-        height: 40,
-        marginBottom:100,
-        borderColor: 'black',
+
+    viewContainer: {
+        margin: 40,
+        marginTop: 100,
+    },
+    viewContainer1: {
+        marginTop: 100,
+        margin: 40,
+    },
+    view4:{
         borderWidth: 1,
-    }
+        borderColor: '#7e2242',
+    },
+
 });

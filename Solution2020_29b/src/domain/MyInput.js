@@ -40,13 +40,14 @@ export default class MyInput extends React.Component{
                 <TextInput
                     style={{
                         height: 40,
-                        borderColor: 'gray',
-                        borderWidth: 1,
+                        borderColor: '#7e2242',
+                        borderWidth: 1.5,
                         marginTop: 20,
                         marginBottom: 20
                     }}
                     editable
                     maxLength={40}
+                    placeholder="Enter student's name"
                     value={this.state.student}
                     onChangeText={(value) => this.saveKey(value)}
                 />
