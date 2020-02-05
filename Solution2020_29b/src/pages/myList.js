@@ -1,23 +1,21 @@
 import React from 'react';
 import {
     Button,
-    StatusBar,
     View,
     StyleSheet,
     Text,
     FlatList,
-    AlertStatic as Alert,
     ActivityIndicator,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
 
-const url = "http://192.168.1.4:2902";
+const url = "http://192.168.43.120:2502";
 
 function Item({ name, status }) {
     return (
         <View style={styles.item}>
-            <Text style={styles.text}> {name} --> {status}</Text>
+            <Text style={styles.text}> Name: {name} --> {status}</Text>
         </View>
     );
 }
@@ -39,7 +37,7 @@ export default class MyList extends React.Component {
        console.log(toBeStored);
        if (toBeStored !== null) {
            console.log(toBeStored);
-           fetch(url + "/request", {
+           fetch(url + "/game", {
                method: 'POST',
                headers: new Headers({
                    'Accept': 'application/json',
@@ -59,7 +57,7 @@ export default class MyList extends React.Component {
            console.log("Connection type", state.type);
            console.log("Is connected?", state.isConnected);
            if (state.isConnected === true) {
-               fetch(url + "/my/" + value)
+               fetch(url + "/games/" + value)
                    .then(async (response) => {
                        return await response.json();
                    })
@@ -136,8 +134,14 @@ export default class MyList extends React.Component {
                     <View style={styles.container3}>
                         <Button title="Sign Out"
                                 color='#7e2242' onPress={this._signOutAsync} />
-                        <Button title="Add request"
+                        <Button title="Add game"
                                 color='#7e2242' onPress={this._recordARequestAsync} />
+                        <Button
+                            style={styles.btn}
+                            title="ALL GAMES"
+                            color="#7e2242"
+                            onPress={() => this.props.navigation.navigate('GetAllOpen')}
+                        />
                     </View>
                 </View>
             </>

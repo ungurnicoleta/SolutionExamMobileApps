@@ -8,14 +8,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const url = "http://192.168.1.4:2902";
+const url = "http://192.168.43.120:2502";
 
-function Item({ name, cost, eCost }) {
+function Item({ name, popularityScore }) {
     return (
         <View style={styles.item}>
             <Text style={styles.text}>Name: {name} </Text>
-            <Text style={styles.text2}>cost: {cost} </Text>
-            <Text style={styles.text2}>eCost: {eCost}</Text>
+            <Text style={styles.text2}>PS: {popularityScore} </Text>
         </View>
     );
 }
@@ -27,12 +26,12 @@ export default class GetAllFilled extends React.Component {
             student: null,
             data : [],
             newData: [],
-            loaded: false
+            loaded: false,
         };
     }
 
     async showData() {
-        fetch(url + "/filled")
+        fetch(url + "/allGames")
             .then(async (response) => {
                 return await response.json();
             })
@@ -49,7 +48,7 @@ export default class GetAllFilled extends React.Component {
 
 
     static navigationOptions = {
-        title: 'Report Section',
+        title: 'Status Section',
     };
 
     _signOutAsync = async () => {
@@ -77,14 +76,14 @@ export default class GetAllFilled extends React.Component {
                     alignItems: 'stretch',
                 }}>
                     <View style={styles.container2} >
-                        <Text style={styles.header}>FILLED EXPENSES</Text>
+                        <Text style={styles.header}>Top 10 games</Text>
                     </View>
 
-                    {this.state.loaded ?
+                    {this.state.loaded?
                         <View style={styles.container}>
                             <FlatList
-                                data={this.state.data.sort((a, b) => a.cost - b.cost).reverse()}
-                                renderItem={({ item }) => <Item name={item.name} cost={item.cost} eCost={item.eCost}/>}
+                                data={this.state.data.sort((a, b) => a.popularityScore - b.popularityScore).reverse().slice(0,10)}
+                                renderItem={({ item }) => <Item name={item.name} popularityScore={item.popularityScore} />}
                                 keyExtractor={item => item.id.toString()}
                             />
                         </View>

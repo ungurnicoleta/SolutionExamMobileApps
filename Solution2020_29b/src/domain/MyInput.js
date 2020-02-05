@@ -36,7 +36,7 @@ export default class MyInput extends React.Component{
                 }}>
                 <Image source={require('../myApp.png')} style={{width: 200, height: 250, alignSelf: "center", marginBottom: 20}}/>
 
-                <Text style={{fontWeight: "bold", textAlign: "center", marginBottom: 20}}>Student's name</Text>
+                <Text style={{fontWeight: "bold", textAlign: "center", marginBottom: 20}}>User's name</Text>
                 <TextInput
                     style={{
                         height: 40,
@@ -47,7 +47,7 @@ export default class MyInput extends React.Component{
                     }}
                     editable
                     maxLength={40}
-                    placeholder="Enter student's name"
+                    placeholder="Enter user's name"
                     value={this.state.student}
                     onChangeText={(value) => this.saveKey(value)}
                 />

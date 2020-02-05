@@ -10,7 +10,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import * as NetInfo from '@react-native-community/netinfo';
 
-const url = "http://192.168.1.4:2902";
+const url = "http://192.168.43.120:2502";
 
 class Item extends React.Component{
     constructor(props){
@@ -26,7 +26,7 @@ class Item extends React.Component{
         return (
             <View style={styles.item}>
                 <Text style={styles.text}>Name: {this.props.name}</Text>
-                <Text style={styles.text2}>eCost: {this.props.eCost}</Text>
+                <Text style={styles.text2}>Size: {this.props.size}</Text>
                 <Button style={styles.btn} color='#7e2242' title="+" onPress={this.myPress}/>
             </View>
         );
@@ -51,7 +51,7 @@ export default class GetAllOpen extends React.Component {
             console.log("Is connected?", state.isConnected);
             if (state.isConnected === true) {
 
-                fetch(url + "/open")
+                fetch(url + "/ready")
             .then(async (response) => {
                 return await response.json();
             })
@@ -75,12 +75,12 @@ export default class GetAllOpen extends React.Component {
         })
     };
 
-    addData = (id) => {
-        this.props.navigation.navigate('Change', {id: id});
+    addData = async (id, name) => {
+        this.props.navigation.navigate('Change', {id: id, name: name});
     };
 
     static navigationOptions = {
-        title: 'All Section',
+        title: 'All Games ',
     };
 
     _signOutAsync = async () => {
@@ -102,14 +102,14 @@ export default class GetAllOpen extends React.Component {
                     alignItems: 'stretch',
                 }}>
                     <View style={styles.container2} >
-                        <Text style={styles.header}>OPEN EXPENSES</Text>
+                        <Text style={styles.header}>ALL AVAILABLE GAMES</Text>
                     </View>
 
                     {this.state.loaded ?
                         <View style={styles.container}>
                             <FlatList
                                 data={this.state.data}
-                                renderItem={({ item }) => <Item name={item.name} eCost={item.eCost} id={item.id} myData={this.addData}/>}
+                                renderItem={({ item }) => <Item name={item.name} size={item.size} id={item.id} myData={this.addData}/>}
                                 keyExtractor={item => item.id.toString()}/>
                         </View>
                         :

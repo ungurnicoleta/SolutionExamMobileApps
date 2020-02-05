@@ -57,7 +57,7 @@ export default class HomePage extends React.Component {
 
                     <Button
                         style={styles.btn}
-                        title="OPEN EXPENSES"
+                        title="ALL GAMES"
                         color="#30516E"
                         onPress={() => this.props.navigation.navigate('GetAllOpen')}
                     />
